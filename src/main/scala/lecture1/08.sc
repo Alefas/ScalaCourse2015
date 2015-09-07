@@ -4,5 +4,10 @@ def fact(n: Int): BigInt = {
   else fact(n - 1) * n
 }
 
-//todo: catch
-fact(100000)
+//todo
+try {
+  fact(100000)
+}
+catch {
+  case e: Throwable ⇒
+}
