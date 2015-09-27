@@ -2,14 +2,17 @@
 
 //Numeric widening
 
-//todo: show
+val i: Int = 123
+val x: Long = i
 
 //Literal narrowing
 
-//todo: show
+val y: Byte = 100
 
 //Value discarding
 
-//todo: show
+val u: Unit = {123; ()}
 
+//Any
 //AnyVal type
+//AnyRef

@@ -8,3 +8,9 @@
   * 5. Есть понятие вариантности.
   */
 //todo: examples?
+class C
+class A extends C
+
+class D[T]
+
+class B[T >: A <: C : D]
