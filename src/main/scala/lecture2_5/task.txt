@@ -1,0 +1,6 @@
+Support Google Search query language.
+Special characters: http://www.googleguide.com/crafting_queries.html
+Calculator search tools: http://www.googleguide.com/calculator.html
+Translator tool and similar: http://www.siteprojects.ru/blog/sintaksis-poiskovyih-zaprosov-v-gugle/
+
+Support should include Grammar Kit bnf grammar, which generates Lexer and Parser automatically.
