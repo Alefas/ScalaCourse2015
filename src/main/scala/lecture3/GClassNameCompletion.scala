@@ -1,0 +1,3 @@
+object GClassNameCompletion {
+  "absd"
+}
