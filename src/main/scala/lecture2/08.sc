@@ -9,14 +9,29 @@
 class A {
   class B
 
-  def foo(b: B) = 1
+  def foo(b: this.B) = 1
+
+  def r(b: A#B) = 1
 }
 //A#B
-//val a: A
-//a.B
-//a.foo(new a.B)
+val a: A = new A
+val b: a.B = new a.B
+val a1: A = new A
+val b1: a1.B = new a1.B
+a.r(new a1.B)
 
 //Singleton types
+
+class Az {
+
+  val g = 1
+
+  val b: this.g.type = g
+}
+val d = 1
+val az = new Az
+az.b
+
 //Annotated types
 val x: B @annotation = new B
 
