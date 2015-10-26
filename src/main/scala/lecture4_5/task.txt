@@ -1,0 +1,5 @@
+Реализовать поддержку OR types (такой есть в Dotty):
+1. Parser (A | B syntax)
+2. PSI, +getType in PSI element
+3. Type equivalence and conformance (and visitor)
+4. Type presentable/canonical text
