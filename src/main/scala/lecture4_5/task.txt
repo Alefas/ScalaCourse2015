@@ -3,3 +3,5 @@
 2. PSI, +getType in PSI element
 3. Type equivalence and conformance (and visitor)
 4. Type presentable/canonical text
+5. Fix type substitutor
+6.* lub and glb
