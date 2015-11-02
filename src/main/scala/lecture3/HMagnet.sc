@@ -1,19 +1,22 @@
 sealed trait SumMagnet {
   type Result
-  def apply(): Result
+  implicit val n: Numeric[Result]
+  def apply(): List[Result]
 }
 
 object SumMagnet {
-  implicit def filterMagnet(
-      filterTuple: (List[Int], Int => Boolean)
-    ): SumMagnet { type Result = Int } =
+  implicit def filterMagnet[T : Numeric](
+      filterTuple: (List[T], T => Boolean)
+    ): SumMagnet { type Result = T } =
     new SumMagnet {
-      override type Result = Int
+      override type Result = T
 
-      override def apply(): Result = {
+      override def apply(): List[Result] = {
         val (list, filter) = filterTuple
-        list.filter(filter).sum
+        list.filter(filter)
       }
+
+      override val n: Numeric[Result] = implicitly
     }
 
   implicit def mapMagnet(
@@ -22,14 +25,19 @@ object SumMagnet {
     new SumMagnet {
       override type Result = Int
 
-      override def apply(): Result = {
+      override def apply(): List[Result] = {
         val (list, map) = mapTuple
-        list.map(map).sum
+        list.map(map)
       }
+
+      override val n: Numeric[Int] = implicitly
     }
 }
 
-def sum(magnet: SumMagnet): magnet.Result =
-  magnet.apply()
+def sum(magnet: SumMagnet): magnet.Result = {
+  val apply = magnet.apply()
+  import magnet._
+  apply.sum
+}
 
 sum(List(1, 2, 3), (x: Int) => false)

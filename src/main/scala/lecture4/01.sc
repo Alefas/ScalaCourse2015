@@ -42,3 +42,35 @@ def append[L <: HList, R <: HList, Result <: HList](l: L, r: R)(
 append(HCons("", HCons(1, HCons(false, HNil))), HCons("", HNil)).tail.head
 
 append(HNil, HNil)
+
+trait Zipper[Left <: HList, Right <: HList, Result <: HList]
+
+
+object Zipper {
+  //L :: Left zip R :: Right => (L, R) :: (Left zip Right)
+  implicit def gerenal[L, R, Left <: HList, Right <: HList, Result <: HList]
+  (implicit zipper: Zipper[Left, Right, Result]): Zipper[L :: Left, R :: Right, (L, R) :: Result] = {}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

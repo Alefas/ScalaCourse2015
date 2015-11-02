@@ -17,7 +17,7 @@ import Implicits._
 
 val a = new A
 
-a.foo
+a2b(a).foo
 
 
 
