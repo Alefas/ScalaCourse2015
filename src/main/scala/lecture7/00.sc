@@ -1,0 +1,1 @@
+"Macroses in Scala and Akka framework."
