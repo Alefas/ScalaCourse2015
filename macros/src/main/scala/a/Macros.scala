@@ -10,7 +10,12 @@ object Macros {
     import c.universe._
 
 
-    //todo:
-    null
+    x.tree match {
+      case q"${Literal(_)}" =>
+        c.Expr(q"print($x)")
+      case _ =>
+        val text = show(x) + " = "
+        c.Expr(q"print($text + $x)")
+    }
   }
 }
