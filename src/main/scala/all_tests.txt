@@ -1,0 +1,111 @@
+1. Напишите максимально эффективный код с позиции implicits, который в тип String добавит метод countA, который считает все вхождения в строке английских букв a.
+2. Напишите объект Concat так, чтобы можно было бы вызывать apply для List[String] и он возвращает строку объединение или если передать List[List[T]], то объединяет списки (подсказка: код должен компилироваться!).
+3. По каким правилам выбирается более приоритетный implicit. Напишите пример, когда правила противоречат друг другу и код не компилируется.
+4. Почему хорошо писать return type явно для implicit методов?
+
+1. Почему следующий код не скомпилируется? Как переписать тип параметра функции 'foo', чтобы код компилировался?
+Потому что трайт будет относится к конкретному инстансу класса Outer
+class Outer {
+  trait Inner
+  def x = new Inner {}
+  def foo(inner: Outer#Inner) {}
+}
+val a = new Outer
+val b = new Outer
+a.foo(b.x)
+2. Почему следующий код не скомпилируется? Как надо изменить тип возвращаемого значения функции 'bar', чтобы код компилировался?
+
+type T = {
+  type X
+  def x : X
+}
+
+def bar(t: T): Foo.X = t.x
+object Foo {
+  type X = Int
+  def x: X = 42
+}
+val i: Int = bar(Foo)
+3.  Какой результат исполнения кода? (вопрос с подвохом)
+def invert(v3: Int)(v2: Int = 2, v1: Int = 1) {
+  println(v1 + ", " + v2 + ", " + v3);
+}
+def invert3 = invert(3) _
+
+invert3(v1 = 2) //2,2,3
+invert3(v1 = 2, v2 = 1) //2,1,3
+4. Хотим на HList написать метод zip. Какая сигнатура индукционного implicit для
+trait Zipper[Left, Right, Result]
+
+1. Напишите extractor, чтобы следующий код был бы осмысленным:
+25 match {
+  case Square(i) => println(i)
+  case _ => println(“Not square”)
+}
+2.  Укажите правильный синтаксис для того, чтобы заматчить хвост списка:
+List(1, 2, 3) match {
+  case List(1, ???) =>
+  case _ =>
+}
+3. Как можно использовать переменную определенную с маленькой буквы в pattern matching, не определяя новую переменную?
+4. Скомпилируется ли этот код? Где ошибка если не скомпилируется?
+
+@tailrec
+def sum(l: List[Int]) = {
+  l.headOption match {
+    case some(element) => element + sum(l.tail)
+    case _ => return 0
+  }
+}
+
+1. Напишите класс с двумя конструкторами. Один принимает на вход целое число, второй строку (используйте toInt для конвертации).
+2. Определите линеаризацию для класса H:
+  trait A
+  trait B extends A
+  trait C
+  trait D extends C with B
+  trait E
+  trait F extends E with C
+  trait H extends F with D
+3.  Какие значения или исключения выдаст следующий код:
+trait A {
+  val x = y + z
+  val y = 2
+  val z = 3
+}
+
+trait B extends A {
+  override val y: Int = x + z
+}
+
+class C extends B {
+  override val z: Int = x + y
+}
+
+new C().x
+new C().y
+new C().z
+4. Какой результат выполнения этого кода?
+
+val values = Seq(100, 110, 120)
+val funcs1 = collection.mutable.Buffer[() => Int]()
+val funcs2 = collection.mutable.Buffer[() => Int]()
+var  = 0
+for (i <- 0 until values.length) {
+ funcs1 += (() => values(i))
+ funcs2 += (() => values(j))
+ j += 1
+}
+
+funcs1.foreach { f1 => println(f1()) }
+funcs2.foreach { f2 => println(f2()) }
+
+1. Запишите без синтаксического сахара: 1 :: array(2) :: 3 :: Nil
+2. Есть ли в Scala break? А continue? Если нету, то что вместо?
+3. Напишите tail recursive функцию, в которой нет анонимных функций. Функция по списку целых чисел возвращает сумму четных элементов. Использовать pattern matching с destructuring ( :: ).
+4. Что вернет код?
+
+List(1, 2, 3, 4, 5).foldLeft(List.empty[Int]) {
+  case (a, 1) => 3 :: a
+  case (a, i) => i - 1 :: a
+}.filter(isPrime).flatMap(x => List.fill(x)(x)).foldRight(1)(_ + _)
